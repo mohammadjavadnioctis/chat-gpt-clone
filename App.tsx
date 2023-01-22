@@ -64,7 +64,7 @@ interface Message {
 
   return (
     
-    <View className='flex-1 border border-orange-400 pt-8'>
+    <View className='flex-1 pt-8'>
       <FlatList
         data={messages}
         keyExtractor={(item) => item.id}
