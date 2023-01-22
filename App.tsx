@@ -63,7 +63,8 @@ interface Message {
   };
 
   return (
-    
+    <>
+    <StatusBar style='dark' />
     <View className='flex-1 pt-8'>
       <FlatList
         data={messages}
@@ -74,6 +75,7 @@ interface Message {
             className={`p-2 rounded-lg my-4 max-w-[90%] ${item.isSentByMe ? "bg-blue-500 self-end":"bg-gray-500 self-start"}`}
           >
             <Text className='text-white'>{item.text}</Text>
+            
           </View>
         )}
       />
@@ -94,6 +96,7 @@ interface Message {
         </View>
       </View>
     </View>
+    </>
   );
 };
 
