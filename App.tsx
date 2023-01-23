@@ -57,7 +57,7 @@ interface Message {
    setInputText('');
    let newMessages = [...messages, { id: new Date().toISOString(), text: inputText, isSentByMe: true }].map(message => message.text).join('\n')
    let chatLog =  [...messages, { id: new Date().toISOString(), text: inputText, isSentByMe: true }]
-    
+    setMessages(chatLog)
   onSubmit(newMessages, chatLog)
     
   };
