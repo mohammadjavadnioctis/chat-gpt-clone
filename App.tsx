@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {FC} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 
@@ -15,13 +15,16 @@ interface Message {
   const App: FC = () => {
   const [messages, setMessages] = React.useState<Message[]>([
     {isSentByMe: true, text:'hi', id: 'uydx'},
-    {isSentByMe: false, text:'hi', id: 'usytdx'},
-    {isSentByMe: true, text:'hi', id: 'uytfdx'},
-    {isSentByMe: true, text:'hi', id: 'uytdgx'},
-    {isSentByMe: false, text:'hi', id: 'uytdhx'},
+    {isSentByMe: false, text:'Hi, how can I help you today ?', id: 'udx'},
+    {isSentByMe: false, text:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo at dignissimos ad laudantium officia suscipit a culpa tempora mollitia ullam dolore non, voluptas molestiae ipsum odit quaerat facilis fugiat sunt.' ,id: 'udfx'},
+    {isSentByMe: false, text:'Hi, how can I help you today ?', id: 'usdx'},
+    {isSentByMe: false, text:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi eligendi veritatis nam, repellat rerum dolorum eos nisi, eveniet, voluptate ea deserunt! Saepe vitae libero dolor, quo enim tempora fuga neque. Cum nesciunt eveniet consectetur neque numquam quidem at vel dolor assumenda eligendi pariatur quisquam, ab incidunt placeat porro illum atque sequi. Expedita tempora iste cumque consectetur pariatur magnam veritatis aliquam saepe, harum velit assumenda exercitationem ea nihil nisi corporis modi nemo nobis, porro et a accusantium dolores possimus culpa. Earum nobis iusto harum sit aut distinctio fugit accusantium ullam eos, omnis, maxime nostrum. Tempora sequi quam facilis fuga laborum! Odit?', id: 'ussdx'},
+    {isSentByMe: false, text:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi eligendi veritatis nam, repellat rerum dolorum eos nisi, eveniet, voluptate ea deserunt! Saepe vitae libero dolor, quo enim tempora fuga neque. Cum nesciunt eveniet consectetur neque numquam quidem at vel dolor assumenda eligendi pariatur quisquam, ab incidunt placeat porro illum atque sequi. Expedita tempora iste cumque consectetur pariatur magnam veritatis aliquam saepe, harum velit assumenda exercitationem ea nihil nisi corporis modi nemo nobis, porro et a accusantium dolores possimus culpa. Earum nobis iusto harum sit aut distinctio fugit accusantium ullam eos, omnis, maxime nostrum. Tempora sequi quam facilis fuga laborum! Odit?', id: 'udffx'},
+    {isSentByMe: false, text:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi eligendi veritatis nam, repellat rerum dolorum eos nisi, eveniet, voluptate ea deserunt! Saepe vitae libero dolor, quo enim tempora fuga neque. Cum nesciunt eveniet consectetur neque numquam quidem at vel dolor assumenda eligendi pariatur quisquam, ab incidunt placeat porro illum atque sequi. Expedita tempora iste cumque consectetur pariatur magnam veritatis aliquam saepe, harum velit assumenda exercitationem ea nihil nisi corporis modi nemo nobis, porro et a accusantium dolores possimus culpa. Earum nobis iusto harum sit aut distinctio fugit accusantium ullam eos, omnis, maxime nostrum. Tempora sequi quam facilis fuga laborum! Odit?', id: 'udggx'},
+    
   ]);
   const [inputText, setInputText] = React.useState('');
-
+  const flatListRef = useRef<FlatList<Message>>(null);
   async function onSubmit(event: string, chatLog: Message[]) {
     // event.preventDefault();
     console.log('this is the sent text', event)
@@ -38,6 +41,7 @@ interface Message {
       console.log('the response: ', data)
       const prevMessage = 
       setMessages([...chatLog, { id: new Date().toISOString()+"hi", text: data?.result[0]?.text , isSentByMe: false }]);
+      
       //   const data = await JSON.stringify(response, null, 4);
       if (response.status !== 200) {
         throw data || new Error(`Request failed with status ${response.status}`);
@@ -58,17 +62,24 @@ interface Message {
    let newMessages = [...messages, { id: new Date().toISOString(), text: inputText, isSentByMe: true }].map(message => message.text).join('\n')
    let chatLog =  [...messages, { id: new Date().toISOString(), text: inputText, isSentByMe: true }]
     setMessages(chatLog)
-  onSubmit(newMessages, chatLog)
-    
+    onSubmit(inputText, chatLog)
   };
+
+
+    useEffect(() => {
+      flatListRef.current?.scrollToEnd({animated: true});  
+
+    }, 
+    [messages])
 
   return (
     <>
     <StatusBar style='dark' />
-    <View className='flex-1 pt-8'>
+    <View className='flex-1 py-8'>
       <FlatList
         data={messages}
         keyExtractor={(item) => item.id}
+        ref={flatListRef}
         renderItem={({ item }) => (
           <View
             
@@ -90,7 +101,7 @@ interface Message {
         <View className={'p-2'}>
           <Pressable onPress={handleSendMessage}>
             <Text>
-              Send
+              Send 
             </Text>
             </Pressable>
         </View>
