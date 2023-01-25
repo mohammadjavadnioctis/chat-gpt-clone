@@ -29,7 +29,7 @@ interface Message {
     // event.preventDefault();
     console.log('this is the sent text', event)
     try {
-      const response = await fetch("https://demo.dornaglobal.com/api/openai", {
+      const response = await fetch("http://localhost:3000/api/openai", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

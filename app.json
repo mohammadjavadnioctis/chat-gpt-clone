@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/openai-avatar.png",
       "resizeMode": "contain",
-      "backgroundColor": "black"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,12 +22,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/openai-avatar.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.smjr.chatgptclone"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/openai-avatar.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9a45b943-f093-4a67-80b8-bb08df9e462c"
+      }
     }
   }
 }
